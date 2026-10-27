@@ -1,0 +1,15 @@
+1. What changed in the customer table when the direction was Both?
+With the Product slicer set to Laptop:
+- Single direction: the table showed all 4 customers (Ali Khan, Sara, Ahmed, Hina). The slicer filters the Sales table, but a Single filter only flows from the one side (dimension) to the many side (fact), so it never travels back to Customers.
+- Both direction: the table showed only Ali Khan. The filter now flows Products -> Sales -> Customers, so only customers who have a Laptop order remain.
+
+2. Which customer has no orders?
+Hina (C04). She exists on the one side (Customers) but has no matching row in Sales, so she never has an order. A one-side row without matching many-side rows is allowed in a many-to-one relationship.
+
+3. Which product was never sold?
+Monitor. It exists in Products but no row in Sales uses it.
+
+4. Why does Computers Sales show 900 on the Accessories row?
+Computers Sales = CALCULATE([Total Sales], Products[Category] = "Computers").
+CALCULATE replaces the existing filter on Products[Category] (the row's "Accessories" filter) with its own filter "Computers". So on every row, including Accessories, the measure evaluates Category = Computers and returns 900.
+EOF
